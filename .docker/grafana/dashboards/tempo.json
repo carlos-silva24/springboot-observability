@@ -18,7 +18,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -55,8 +54,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 14,
+        "w": 24,
         "x": 0,
         "y": 0
       },
@@ -92,7 +91,7 @@
             }
           ],
           "limit": 20,
-          "query": "{resource.service.name=\"springboot-observability\"}",
+          "query": "{resource.service.name=\"springboot-observability\"} | select(span.uri, span.status)",
           "queryType": "traceql",
           "refId": "A",
           "tableType": "traces"
@@ -116,6 +115,6 @@
   "timezone": "",
   "title": "tracing",
   "uid": "dbf740be-0563-4230-af4f-36416f2f4c1f",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

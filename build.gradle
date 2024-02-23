@@ -20,14 +20,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-jersey'
 
+	implementation 'org.glassfish.jersey.ext:jersey-micrometer'
 	implementation 'io.micrometer:micrometer-registry-otlp'
-
-	implementation platform('io.micrometer:micrometer-tracing-bom:latest.release')
 	implementation 'io.micrometer:micrometer-tracing-bridge-otel'
 	implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
 }
 
 tasks.named('test') {
