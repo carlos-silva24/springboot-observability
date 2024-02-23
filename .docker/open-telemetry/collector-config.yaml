@@ -1,0 +1,57 @@
+receivers:
+  loki:
+    protocols:
+      http:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  otlp:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+  prometheus:
+    endpoint: ot-collector:8889
+  loki:
+    endpoint: http://grafana-loki:3100/loki/api/v1/push
+    tls:
+      insecure: true
+  logging:
+    loglevel: info
+
+processors:
+  # batch metrics before sending to reduce API usage
+  batch:
+  attributes:
+    actions:
+      - action: insert
+        key: loki.attribute.labels
+        value: container
+      - action: insert
+        key: loki.format
+        value: raw
+
+extensions:
+  health_check:
+  pprof:
+    endpoint: ot-collector:1888
+  zpages:
+    endpoint: ot-collector:55679
+
+service:
+  extensions: [ health_check, pprof, zpages ]
+  pipelines:
+    traces:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ logging, otlp ]
+    metrics:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ logging, prometheus ]
+    logs:
+      receivers: [ loki ]
+      processors: [ attributes ]
+      exporters: [ loki ]

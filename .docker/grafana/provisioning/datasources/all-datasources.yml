@@ -1,0 +1,35 @@
+datasources:
+  - name: 'prometheus'
+    uid: "ma-prometheus"
+    type: 'prometheus'
+    access: 'proxy'
+    org_id: 1
+    url: 'http://prometheus:9090'
+    is_default: true
+    version: 1
+    editable: true
+
+  - name: 'tempo'
+    uid: "ma-tempo"
+    type: 'tempo'
+    access: 'proxy'
+    org_id: 1
+    url: 'http://tempo:3200'
+    version: 1
+    editable: true
+
+  - name: Loki
+    type: loki
+    uid: loki
+    access: proxy
+    url: http://grafana-loki:3100
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: true
+    jsonData:
+      derivedFields:
+        - datasourceUid: ma-tempo
+          matcherRegex: "\u0022traceid\u0022:\u0022(\\w+)\u0022"
+          name: TraceId
+          url: '$${__value.raw}'
