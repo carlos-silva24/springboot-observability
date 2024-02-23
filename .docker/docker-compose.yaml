@@ -66,9 +66,9 @@ services:
       - springboot-observability
 
   grafana-loki:
-    image: grafana/loki:main
+    image: grafana/loki:2.9.4
     container_name: grafana-loki
-    command: "-config.file=/etc/loki/config.yaml -target=write"
+    command: "-config.file=/etc/loki/config.yaml"
     ports:
       - "7005:3100"
       - "7946"
@@ -83,7 +83,7 @@ services:
       - springboot-observability
 
   grafana-promtail:
-    image: grafana/promtail:2.9.2
+    image: grafana/promtail:2.9.4
     container_name: grafana-promtail
     volumes:
       - ./grafana-loki/promtail-local-config.yaml:/etc/promtail/config.yaml:ro

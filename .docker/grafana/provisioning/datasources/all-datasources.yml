@@ -23,13 +23,7 @@ datasources:
     uid: loki
     access: proxy
     url: http://grafana-loki:3100
-    basicAuth: false
-    isDefault: false
-    version: 1
     editable: true
     jsonData:
-      derivedFields:
-        - datasourceUid: ma-tempo
-          matcherRegex: "\u0022traceid\u0022:\u0022(\\w+)\u0022"
-          name: TraceId
-          url: '$${__value.raw}'
+      timeout: 60
+      maxLines: 1000
